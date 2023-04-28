@@ -1,6 +1,5 @@
 package ironhack.IronLibrary.repository;
 
-import ironhack.IronLibrary.model.Author;
 import ironhack.IronLibrary.model.Book;
 import ironhack.IronLibrary.model.Issue;
 import ironhack.IronLibrary.model.Student;
@@ -13,42 +12,28 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class IssueRepositoryTest {
-
-    @Autowired
-    IssueRepository issueRepository;
-
-    @Autowired
-    BookRepository bookRepository;
-
+class StudentRepositoryTest {
     @Autowired
     StudentRepository studentRepository;
 
     @BeforeEach
     public void setUp() {
-        Book book = new Book("978-3-16-148410-0",  "The Notebook", "Romance", 4);
-        bookRepository.save(book);
         Student student = new Student("1234567890", "John");
         studentRepository.save(student);
-        Issue issue = new Issue("2023-12-03", "2023-12-15",student, book);
-        issueRepository.save(issue);
     }
 
     @AfterEach
     public void tearDown() {
-        issueRepository.deleteAll();
         studentRepository.deleteAll();
-        bookRepository.deleteAll();
 
     }
 
     @Test
     public void findAll() {
-        List<Issue> issueList = issueRepository.findAll();
-        System.out.println(issueList);
-        assertEquals(1, issueList.size());
+        List<Student> studentList = studentRepository.findAll();
+        System.out.println(studentList);
+        assertEquals(1, studentList.size());
     }
 
 }

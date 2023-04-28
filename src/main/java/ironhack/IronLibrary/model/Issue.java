@@ -9,10 +9,9 @@ public class Issue {
     private Integer issueId;
     private String issueDate;
     private String returnDate;
-    //TODO: add studentId
-    //@OneToOne
-    //@JoinColumn(name = "studentId")
-    //private Student issueStudent;
+    @OneToOne
+    @JoinColumn(name = "studentId")
+    private Student issueStudent;
     @OneToOne
     @JoinColumn(name = "book_isbn")
     private Book issueBook;
@@ -20,10 +19,10 @@ public class Issue {
     public Issue() {
     }
 
-    //TODO add student
-    public Issue(String issueDate, String returnDate, Book issueBook) {
+    public Issue(String issueDate, String returnDate, Student issueStudent, Book issueBook) {
         this.issueDate = issueDate;
         this.returnDate = returnDate;
+        this.issueStudent = issueStudent;
         this.issueBook = issueBook;
     }
 
@@ -59,12 +58,21 @@ public class Issue {
         this.issueBook = issueBook;
     }
 
+    public Student getIssueStudent() {
+        return issueStudent;
+    }
+
+    public void setIssueStudent(Student issueStudent) {
+        this.issueStudent = issueStudent;
+    }
+
     @Override
     public String toString() {
         return "Issue{" +
                 "issueId=" + issueId +
                 ", issueDate='" + issueDate + '\'' +
                 ", returnDate='" + returnDate + '\'' +
+                ", issueStudent=" + issueStudent +
                 ", issueBook=" + issueBook +
                 '}';
     }
