@@ -8,6 +8,7 @@ public class Book {
 
     @Id
     private String isbn;
+    private String authorName = null;
     private String title;
     private String category;
     private Integer quantity;
@@ -28,6 +29,14 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public String getTitle() {
