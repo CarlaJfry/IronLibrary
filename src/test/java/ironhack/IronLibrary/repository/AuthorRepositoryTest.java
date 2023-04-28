@@ -11,14 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class BookRepositoryTest {
-
-    @Autowired
-    BookRepository bookRepository;
+class AuthorRepositoryTest {
     @Autowired
     AuthorRepository authorRepository;
+    @Autowired
+    BookRepository bookRepository;
 
     @BeforeEach
     public void setUp() {
@@ -30,14 +28,16 @@ class BookRepositoryTest {
 
     @AfterEach
     public void tearDown() {
-        bookRepository.deleteAll();
         authorRepository.deleteAll();
+        bookRepository.deleteAll();
     }
 
     @Test
     public void findAll() {
-        List<Book> bookList = bookRepository.findAll();
-        System.out.println(bookList);
-        assertEquals(1, bookList.size());
+        List<Author> authorList = authorRepository.findAll();
+        System.out.println(authorList);
+        assertEquals(1, authorList.size());
     }
+
+
 }
