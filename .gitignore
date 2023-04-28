@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Ignore password ###
+/src/test/resources/application.properties
+/src/main/resources/application.properties
