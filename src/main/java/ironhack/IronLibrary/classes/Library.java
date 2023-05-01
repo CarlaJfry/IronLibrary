@@ -11,6 +11,9 @@ import ironhack.IronLibrary.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Optional;
+
 @Component
 public class Library {
     @Autowired
@@ -34,4 +37,41 @@ public class Library {
     public void insertIssue(Issue issue){
         issueRepository.save(issue);
     }
+    public Book getBookByTitle(String title) {
+        Optional<Book> optionalBook = bookRepository.findBookByTitle(title);
+        if(optionalBook.isPresent()) {
+            return optionalBook.get();
+        }
+        return null;
+
+    }
+    public List<Book> getBookByCategory(String category) {
+        List<Book> bookList = bookRepository.findBookByCategory(category);
+        if(bookList.size() > 0) {
+            return bookList;
+        }
+        return null;
+    }
+    public Book getBookByAuthor(String authorName) {
+        Optional<Author> optionalAuthor = authorRepository.findAuthorByName(authorName);
+        if(optionalAuthor.isPresent()) {
+            return optionalAuthor.get().getPublishedBook();
+        }
+        return null;
+    }
+    public List<Author> getAllAuthors(){
+        List<Author> authorsList = authorRepository.findAll();
+        if(authorsList.size() > 0) {
+            return authorsList;
+        }
+        return null;
+    }
+    public Book getBookById(String isbn) {
+        Optional<Book> optionalBook = bookRepository.findById(isbn);
+        if (optionalBook.isPresent()) {
+            return optionalBook.get();
+        }
+        return null;
+    }
+    //TODO: 7 - List books by usn
 }
