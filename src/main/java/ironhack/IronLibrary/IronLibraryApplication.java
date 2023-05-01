@@ -9,7 +9,6 @@ public class IronLibraryApplication {
 
 	public static void main(String[] args) throws InterruptedException {
 		SpringApplication.run(IronLibraryApplication.class, args);
-
 		Menu menu = new Menu();
 		menu.userInteraction();
 	}
