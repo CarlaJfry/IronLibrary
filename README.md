@@ -28,7 +28,7 @@ The menu that offers several options for managing your library include:
 - `Exit`: Allows you to finish the process whenever you want to. 
 
 
-## Acknowledgment
+## Acknowledgments
 
 Thanks to the effort and cooperation of the following contributors, this project was made possible :  
 
