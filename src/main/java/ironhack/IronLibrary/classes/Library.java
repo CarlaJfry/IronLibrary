@@ -73,5 +73,12 @@ public class Library {
         }
         return null;
     }
+    public List<Issue>findIssueByStudentNumber(String studentUsn){
+        List<Issue> issueList = issueRepository.findAllByStudentUsn(studentUsn);
+        if(issueList.size() > 0) {
+            return issueList;
+        }
+        return null;
+    }
     //TODO: 7 - List books by usn
 }

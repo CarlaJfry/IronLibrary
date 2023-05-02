@@ -9,7 +9,7 @@ public class Issue {
     private Integer issueId;
     private String issueDate;
     private String returnDate;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "studentId")
     private Student issueStudent;
     @OneToOne

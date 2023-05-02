@@ -98,9 +98,9 @@ public class Menu {
         } else if (command == 6) {
             issueBook();
         } else if (command == 7) {
-//            listBooks();
+            listBooksByStudentNumber();
         } else if (command == 8) {
-//            exit();
+            exit();
         } else {
             System.out.println("Please enter one of the possible available commands: 1, 2, 3...8");
             executeCommands(introduceCommand());
@@ -322,15 +322,27 @@ public class Menu {
 
     }
 
-//TODO    LIST OF BOOK BY STUDENT NUMBER
+    public void listBooksByStudentNumber() {
+        String usn;
+        System.out.println("Enter usn: ");
+        usn = validateString();
+        List<Issue> issueList = library.findIssueByStudentNumber(usn);
+        System.out.println("");
+        System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
+        for (Issue issue : issueList){
+            System.out.println("");
+            System.out.println("");
+            System.out.printf(COLOR_BLUE + "%-20s   %-15s   %-10s   %n", "Book Title", "Student Name", "Return Date" + COLOR_RESET);
+            System.out.printf("%-20s   %-15s   %-10s   %n", issue.getIssueBook().getTitle(), issue.getIssueStudent().getName(), issue.getReturnDate());
+        }
+        System.out.println("");
+        System.out.println("");
 
-//        System.out.println("");
-//        System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
-//        System.out.println("");
-//        System.out.println("");
-//        System.out.printf(COLOR_BLUE + "%-20s   %-15s   %-10s   %n", "Book Title","Student Name","Return Date" + COLOR_RESET);
-//        System.out.printf("%-20s   %-15s   %-10s   %n", book.getTitle(), student.getName(), issue.getReturnDate());
-//        System.out.println("");
-//        System.out.println("");
+    }
+    public void exit() {
+        exit=true;
+        scanner.close();
+        System.out.println("Goodbye!");
+    }
 
 }
