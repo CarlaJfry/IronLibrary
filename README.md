@@ -1,4 +1,10 @@
-# IronLibrary   
+# __  .______        ______   .__   __.  __       __  .______   .______          ___      .______     ____    ____ \n" +
+            "|  | |   _  \\      /  __  \\  |  \\ |  | |  |     |  | |   _  \\  |   _  \\        /   \\     |   _  \\    \\   \\  /   / \n" +
+            "|  | |  |_)  |    |  |  |  | |   \\|  | |  |     |  | |  |_)  | |  |_)  |      /  ^  \\    |  |_)  |    \\   \\/   /  \n" +
+            "|  | |      /     |  |  |  | |  . `  | |  |     |  | |   _  <  |      /      /  /_\\  \\   |      /      \\_    _/   \n" +
+            "|  | |  |\\  \\----.|  `--'  | |  |\\   | |  `----.|  | |  |_)  | |  |\\  \\----./  _____  \\  |  |\\  \\----.   |  |     \n" +
+            "|__| | _| `._____| \\______/  |__| \\__| |_______||__| |______/  | _| `._____/__/     \\__\\ | _| `._____|   |__|  
+            
 # 📚 Facilitating Library Management 📚
 
 Helping to manage and acquire data about the books that are being used by students, IronLibrary is an exceptional Management System designed to simplify the management of issues. Our clear documentation will walk you through the core features of the system, ensuring a user-friendly interface.
