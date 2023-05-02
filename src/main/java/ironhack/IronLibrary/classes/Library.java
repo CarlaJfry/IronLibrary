@@ -28,8 +28,17 @@ public class Library {
     public void insertStudent(Student student){
         studentRepository.save(student);
     }
-    public void insertBook(Book book){
-        bookRepository.save(book);
+    public boolean insertBook(Book newBook){
+        Optional<Book> bookOptional = bookRepository.findById(newBook.getIsbn());
+        if(bookOptional.isPresent()){
+            Book oldBook = bookOptional.get();
+            Integer newQuantity = oldBook.getQuantity() + newBook.getQuantity();
+            oldBook.setQuantity(newQuantity);
+            bookRepository.save(oldBook);
+            return true;
+        }
+        bookRepository.save(newBook);
+        return false;
     }
     public void insertAuthor(Author author){
         authorRepository.save(author);
@@ -80,5 +89,4 @@ public class Library {
         }
         return null;
     }
-    //TODO: 7 - List books by usn
 }

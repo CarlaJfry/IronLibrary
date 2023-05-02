@@ -127,14 +127,20 @@ public class Menu {
         System.out.println("Enter number of books :");
         numberOfBooks = validateNumber();
         Book book1 = new Book(isbn, title, category, numberOfBooks);
-        library.insertBook(book1);
-        Author author1 = new Author(authorName, email, book1);
-        library.insertAuthor(author1);
-        System.out.println("");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("------------------------------Great job! We have added your book to our database! " + COURSE_IMAGE + "-------------------------------------");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("");
+        if(library.insertBook(book1)) {
+            System.out.println("");
+            System.out.println(COLOR_BLUE + "We have some copies of this book already, " + numberOfBooks + " will be added to the collection! " + COURSE_IMAGE + COLOR_RESET);
+            System.out.println("");
+        }else{
+            Author author1 = new Author(authorName, email, book1);
+            library.insertAuthor(author1);
+            System.out.println("");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("------------------------------Great job! We have added your book to our database! " + COURSE_IMAGE + "-------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("");
+        }
+
     }
 
     public String validateName() {
