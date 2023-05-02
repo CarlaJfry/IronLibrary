@@ -153,14 +153,15 @@ public class Menu {
     private boolean isValidName(String name) {
         return name.matches("^[A-Za-z]+(\\s[A-Za-z]+)+$");
     }
-    private String validateBook(){
-    String isbn = null;
+
+    private String validateBook() {
+        String isbn = null;
         while (isbn == null || library.getBookById(isbn) == null) {
-        System.out.println("Please provide a valid ISBN");
-        isbn = scanner.nextLine();
-    }
+            System.out.println("Please provide a valid ISBN");
+            isbn = scanner.nextLine();
+        }
         return isbn;
-}
+    }
 
     public String validateEmail() {
         String email = null;
@@ -204,19 +205,16 @@ public class Menu {
     }
 
     public void listBooksWithAuthor() {
-        List <Author> authorsList = library.getAllAuthors();
+        List<Author> authorsList = library.getAllAuthors();
         System.out.println("");
         System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
         System.out.println("");
-        for(Author a : authorsList){
-            System.out.println("ISBN: " + a.getPublishedBook().getIsbn());
-            System.out.println("Title: " + a.getPublishedBook().getTitle());
-            System.out.println("Category: " + a.getPublishedBook().getCategory());
-            System.out.println("Quantity: " + a.getPublishedBook().getQuantity());
-            System.out.println("Author: " + a.getName());
-            System.out.println("Author: " + a.getEmail());
-            System.out.println("\n");
+        System.out.println("");
+        System.out.printf(COLOR_BLUE + "%-17s   %-20s   %-10s   %-8s   %-20s   %-20s   %n", "Book ISBN", "Book Title", "Category", "Quantity", "Author name", "Author email" + COLOR_RESET);
+        for (Author a : authorsList) {
+            System.out.printf("%-17s   %-20s   %-10s   %-8d   %-20s   %-20s   %n", a.getPublishedBook().getIsbn(), a.getPublishedBook().getTitle(), a.getPublishedBook().getCategory(), a.getPublishedBook().getQuantity(), a.getName(), a.getEmail());
         }
+        System.out.println("");
         System.out.println("");
 
     }
@@ -257,20 +255,28 @@ public class Menu {
         }
 
 //        SI ENCUENTRA EL BOOK
-        if(spawnedBook != null) {
+        if (spawnedBook != null) {
             System.out.println("");
             System.out.println("We found your book! " + COURSE_IMAGE);
             System.out.println("");
-            System.out.println("ISBN: " + spawnedBook.getIsbn());
-            System.out.println("Title: " + spawnedBook.getTitle());
-            System.out.println("Category: " + spawnedBook.getCategory());
-            System.out.println("Quantity: " + spawnedBook.getQuantity());
+            System.out.println("");
+            System.out.printf(COLOR_BLUE + "%-17s  %-20s   %-10s   %-8s   %n", "Book ISBN", "Book Title", "Category", "Quantity" + COLOR_RESET);
+            System.out.printf("%-17s  %-20s   %-10s   %-8s   %n", spawnedBook.getIsbn(), spawnedBook.getTitle(), spawnedBook.getCategory(), spawnedBook.getQuantity());
+            System.out.println("");
+            System.out.println("");
 //        SI NO ENCUENTRA EL BOOK
-        }else if(str == "category" && bookList != null) {
-            for(Book b : bookList){
-                System.out.println(b);
-        }
-        }else {
+        } else if (str == "category" && bookList != null) {
+            System.out.println("");
+            System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
+            System.out.println("");
+            System.out.println("");
+            System.out.printf(COLOR_BLUE + "%-17s  %-20s   %-10s   %-8s   %n", "Book ISBN", "Book Title", "Category", "Quantity" + COLOR_RESET);
+            for (Book b : bookList) {
+                System.out.printf("%-17s  %-20s   %-10s   %-8s   %n", b.getIsbn(), b.getTitle(), b.getCategory(), b.getQuantity());
+            }
+            System.out.println("");
+            System.out.println("");
+        } else {
             System.out.println("");
             System.out.println("");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
@@ -282,7 +288,8 @@ public class Menu {
             System.out.println("");
         }
     }
-    public void issueBook(){
+
+    public void issueBook() {
         String usn;
         String studentName;
         String issueDate;
@@ -312,6 +319,18 @@ public class Menu {
         System.out.println("------------------------------Great job! We have issued your book! " + COURSE_IMAGE + "-------------------------------------");
         System.out.println("-------------------------------------------------------------------------------------------------------------------------");
         System.out.println("");
+
     }
+
+//TODO    LIST OF BOOK BY STUDENT NUMBER
+
+//        System.out.println("");
+//        System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
+//        System.out.println("");
+//        System.out.println("");
+//        System.out.printf(COLOR_BLUE + "%-20s   %-15s   %-10s   %n", "Book Title","Student Name","Return Date" + COLOR_RESET);
+//        System.out.printf("%-20s   %-15s   %-10s   %n", book.getTitle(), student.getName(), issue.getReturnDate());
+//        System.out.println("");
+//        System.out.println("");
 
 }
