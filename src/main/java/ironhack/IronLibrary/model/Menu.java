@@ -126,6 +126,10 @@ public class Menu {
         System.out.println("");
         System.out.println("Enter Author name:");
         authorName = validateName();
+        while(library.isAuthorExistent(authorName)){
+            System.out.println("The Author name already exists. Please enter a different name: ");
+            authorName = validateName();
+        }
         System.out.println("");
         System.out.println("Enter Author email:");
         email = validateEmail();
@@ -133,14 +137,14 @@ public class Menu {
         System.out.println("Enter number of books:");
         numberOfBooks = validateNumber();
         Book book1 = new Book(isbn, title, category, numberOfBooks);
-        if(library.insertBook(book1)) {
+        if (library.insertBook(book1)) {
             System.out.println("");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("---------------------------------- We have some copies of this book already ---------------------------------------------");
-            System.out.println("------------------------------------ "+ numberOfBooks +" will be added to our database! "+ COURSE_IMAGE +"---------------------------------------------");
+            System.out.println("------------------------------------ " + numberOfBooks + " will be added to our database! " + COURSE_IMAGE + "---------------------------------------------");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("");
-        }else{
+        } else {
             Author author1 = new Author(authorName, email, book1);
             library.insertAuthor(author1);
             System.out.println("");
@@ -174,7 +178,7 @@ public class Menu {
         while (isbn == null || isbn.isEmpty() || !isValidIsbn(isbn)) {
 
             isbn = scanner.nextLine();
-            if(!isValidIsbn(isbn)) {
+            if (!isValidIsbn(isbn)) {
                 System.out.println(COLOR_RED + "Please provide a valid ISBN" + COLOR_RESET);
                 System.out.println("Format example: '978-3-16-148410-1'");
             }
@@ -190,7 +194,7 @@ public class Menu {
         String isbn = null;
         while (isbn == null || library.getBookById(isbn) == null) {
             isbn = scanner.nextLine();
-            if(library.getBookById(isbn) == null){
+            if (library.getBookById(isbn) == null) {
                 System.out.println(COLOR_RED + "Please provide a valid ISBN" + COLOR_RESET);
             }
         }
@@ -239,9 +243,11 @@ public class Menu {
         return number;
     }
 
+
+
     public void listBooksWithAuthor() {
         List<Author> authorsList = library.getAllAuthors();
-        if(authorsList == null) {
+        if (authorsList == null) {
             System.out.println("");
             System.out.println("");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
@@ -251,7 +257,7 @@ public class Menu {
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("");
             System.out.println("");
-        }else{
+        } else {
             System.out.println("");
             System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
             System.out.println("");
@@ -287,7 +293,7 @@ public class Menu {
         if (str == "title") {
             System.out.println("Enter title :");
             param = validateString();
-            spawnedBook = library.getBookByTitle(param);
+            bookList = library.getBookByTitle(param);
 
         } else if (str == "author") {
             System.out.println("Enter Author Name :");
@@ -301,13 +307,15 @@ public class Menu {
         }
 
 //        SI ENCUENTRA EL BOOK
-        if (spawnedBook != null) {
+        if (bookList != null) {
             System.out.println("");
             System.out.println("We found your book! " + COURSE_IMAGE);
             System.out.println("");
             System.out.println("");
             System.out.printf(COLOR_BLUE + "%-17s  %-20s   %-10s   %-8s   %n", "Book ISBN", "Book Title", "Category", "Quantity" + COLOR_RESET);
-            System.out.printf("%-17s  %-20s   %-10s   %-8s   %n", spawnedBook.getIsbn(), spawnedBook.getTitle(), spawnedBook.getCategory(), spawnedBook.getQuantity());
+           for(Book b : bookList) {
+               System.out.printf("%-17s  %-20s   %-10s   %-8s   %n", b.getIsbn(), b.getTitle(), b.getCategory(), b.getQuantity());
+           }
             System.out.println("");
             System.out.println("");
 //        SI NO ENCUENTRA EL BOOK
@@ -359,7 +367,7 @@ public class Menu {
         System.out.println("Enter ISBN:");
         isbn = validateBook();
         book = library.getBookById(isbn);
-        if(book.getQuantity() == 0){
+        if (book.getQuantity() == 0) {
             System.out.println("");
             System.out.println("");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
@@ -368,7 +376,7 @@ public class Menu {
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("");
             System.out.println("");
-        }else{
+        } else {
             Student stu = new Student(usn, studentName);
             library.insertStudent(stu);
             Issue issue = new Issue(issueDate, returnDate, stu, book);
@@ -386,10 +394,10 @@ public class Menu {
         System.out.println("Enter usn: ");
         usn = validateString();
         List<Issue> issueList = library.findIssueByStudentNumber(usn);
-        if(issueList!=null){
+        if (issueList != null) {
             System.out.println("");
             System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
-            for (Issue issue : issueList){
+            for (Issue issue : issueList) {
                 System.out.println("");
                 System.out.println("");
                 System.out.printf(COLOR_BLUE + "%-20s   %-15s   %-10s   %-10s   %n", "Book Title", "Student Name", "Return Date", "Issue ID" + COLOR_RESET);
@@ -397,21 +405,21 @@ public class Menu {
             }
             System.out.println("");
             System.out.println("");
-        }else{
-            System.out.println(COLOR_RED+"Error! There is no student matching that usn. Try again..."+COLOR_RESET);
+        } else {
+            System.out.println(COLOR_RED + "Error! There is no student matching that usn. Try again..." + COLOR_RESET);
             listBooksByStudentNumber();
         }
     }
 
     public void exit() throws InterruptedException {
-        exit=true;
+        exit = true;
         scanner.close();
         Thread.sleep(1000);
         System.out.println("");
         System.out.println("Process finished.");
         System.out.println("");
         Thread.sleep(1000);
-        System.out.println(COLOR_PURPLE+"  _______   ______     ______    _______  .______   ____    ____  _______ \n" +
+        System.out.println(COLOR_PURPLE + "  _______   ______     ______    _______  .______   ____    ____  _______ \n" +
                 " /  _____| /  __  \\   /  __  \\  |       \\ |   _  \\  \\   \\  /   / |   ____|\n" +
                 "|  |  __  |  |  |  | |  |  |  | |  .--.  ||  |_)  |  \\   \\/   /  |  |__   \n" +
                 "|  | |_ | |  |  |  | |  |  |  | |  |  |  ||   _  <    \\_    _/   |   __|  \n" +

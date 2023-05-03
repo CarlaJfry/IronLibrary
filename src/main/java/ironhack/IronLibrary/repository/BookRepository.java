@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface BookRepository extends JpaRepository<Book, String> {
     @Query("SELECT b FROM Book b WHERE LOWER(b.title) = LOWER(:title)")
-    Optional<Book> findBookByTitle(@Param("title") String title);
+    List<Book> findBookByTitle(@Param("title") String title);
     @Query("SELECT b FROM Book b WHERE LOWER(b.category) = LOWER(:category)")
     List<Book> findBooksByCategory(@Param("category") String category);
 }
