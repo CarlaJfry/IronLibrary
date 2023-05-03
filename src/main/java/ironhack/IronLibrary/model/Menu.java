@@ -241,17 +241,17 @@ public class Menu {
 
     public void listBooksWithAuthor() {
         List<Author> authorsList = library.getAllAuthors();
-//        if(authorsList.isEmpty() || authorsList == null) {
-//            System.out.println("");
-//            System.out.println("");
-//            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-//            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-//            System.out.println("-------------------------------Oops! There are no books in this library yet " + SAD_FACE + "--------------------------------------------");
-//            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-//            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-//            System.out.println("");
-//            System.out.println("");
-//        }
+        if(authorsList == null) {
+            System.out.println("");
+            System.out.println("");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("-------------------------------Oops! There are no books in this library yet " + SAD_FACE + "--------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("");
+            System.out.println("");
+        }
         System.out.println("");
         System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
         System.out.println("");
@@ -359,16 +359,26 @@ public class Menu {
         System.out.println("Enter ISBN:");
         isbn = validateBook();
         book = library.getBookById(isbn);
-        Student stu = new Student(usn, studentName);
-        library.insertStudent(stu);
-        Issue issue = new Issue(issueDate, returnDate, stu, book);
-        library.insertIssue(issue);
-        System.out.println("");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("--------------------------------------- Great job! We have issued your book! " + COURSE_IMAGE + "-------------------------------------------");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("");
-
+        if(book.getQuantity() == 0){
+            System.out.println("");
+            System.out.println("");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------Oops! There are no available copies of this book " + SAD_FACE + "--------------------------------------");
+            System.out.println("------------------------------------Choose another one or try again another day!-----------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("");
+            System.out.println("");
+        }else{
+            Student stu = new Student(usn, studentName);
+            library.insertStudent(stu);
+            Issue issue = new Issue(issueDate, returnDate, stu, book);
+            library.insertIssue(issue);
+            System.out.println("");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("--------------------------------------- Great job! We have issued your book! " + COURSE_IMAGE + "-------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("");
+        }
     }
 
     public void listBooksByStudentNumber() {
@@ -380,14 +390,15 @@ public class Menu {
         System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
         System.out.println("");
         System.out.println("");
-        System.out.printf(COLOR_BLUE + "%-20s   %-15s   %-10s   %n", "Book Title", "Student Name", "Return Date" + COLOR_RESET);
+        System.out.printf(COLOR_BLUE + "%-20s   %-15s   %-10s   %-10s   %n", "Book Title", "Student Name", "Return Date", "Issue ID" + COLOR_RESET);
         for (Issue issue : issueList){
-            System.out.printf("%-20s   %-15s   %-10s   %n", issue.getIssueBook().getTitle(), issue.getIssueStudent().getName(), issue.getReturnDate());
+            System.out.printf("%-20s   %-15s   %-10s   %-10s   %n", issue.getIssueBook().getTitle(), issue.getIssueStudent().getName(), issue.getReturnDate(), issue.getIssueId());
         }
         System.out.println("");
         System.out.println("");
 
     }
+
     public void exit() {
         exit=true;
         scanner.close();

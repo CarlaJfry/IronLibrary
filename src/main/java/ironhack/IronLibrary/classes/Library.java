@@ -25,15 +25,17 @@ public class Library {
     @Autowired
     IssueRepository issueRepository;
 
-    public void insertStudent(Student student){
+    public void insertStudent(Student student) {
         Optional<Student> studentOptional = studentRepository.findById(student.getUsn());
-        if(studentOptional.isPresent()) { return; }
+        if (studentOptional.isPresent()) {
+            return;
+        }
         studentRepository.save(student);
     }
 
-    public boolean insertBook(Book newBook){
+    public boolean insertBook(Book newBook) {
         Optional<Book> bookOptional = bookRepository.findById(newBook.getIsbn());
-        if(bookOptional.isPresent()){
+        if (bookOptional.isPresent()) {
             Book oldBook = bookOptional.get();
             Integer newQuantity = oldBook.getQuantity() + newBook.getQuantity();
             oldBook.setQuantity(newQuantity);
@@ -44,11 +46,11 @@ public class Library {
         return false;
     }
 
-    public void insertAuthor(Author author){
+    public void insertAuthor(Author author) {
         authorRepository.save(author);
     }
 
-    public void insertIssue(Issue issue){
+    public void insertIssue(Issue issue) {
         Optional<Book> bookOptional = bookRepository.findById(issue.getIssueBook().getIsbn());
         Book oldBook = bookOptional.get();
         Integer newQuantity = oldBook.getQuantity() - 1;
@@ -59,7 +61,7 @@ public class Library {
 
     public Book getBookByTitle(String title) {
         Optional<Book> optionalBook = bookRepository.findBookByTitle(title);
-        if(optionalBook.isPresent()) {
+        if (optionalBook.isPresent()) {
             return optionalBook.get();
         }
         return null;
@@ -67,7 +69,7 @@ public class Library {
 
     public List<Book> getBookByCategory(String category) {
         List<Book> bookList = bookRepository.findBookByCategory(category);
-        if(bookList.size() > 0) {
+        if (bookList.size() > 0) {
             return bookList;
         }
         return null;
@@ -75,15 +77,15 @@ public class Library {
 
     public Book getBookByAuthor(String authorName) {
         Optional<Author> optionalAuthor = authorRepository.findAuthorByName(authorName);
-        if(optionalAuthor.isPresent()) {
+        if (optionalAuthor.isPresent()) {
             return optionalAuthor.get().getPublishedBook();
         }
         return null;
     }
 
-    public List<Author> getAllAuthors(){
+    public List<Author> getAllAuthors() {
         List<Author> authorsList = authorRepository.findAll();
-        if(authorsList.size() > 0) {
+        if (authorsList.size() > 0) {
             return authorsList;
         }
         return null;
@@ -97,11 +99,12 @@ public class Library {
         return null;
     }
 
-    public List<Issue>findIssueByStudentNumber(String studentUsn){
+    public List<Issue> findIssueByStudentNumber(String studentUsn) {
         List<Issue> issueList = issueRepository.findAllByStudentUsn(studentUsn);
-        if(issueList.size() > 0) {
+        if (issueList.size() > 0) {
             return issueList;
         }
         return null;
     }
+
 }
