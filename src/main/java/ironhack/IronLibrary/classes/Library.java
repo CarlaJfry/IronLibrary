@@ -25,26 +25,48 @@ public class Library {
     @Autowired
     IssueRepository issueRepository;
 
-    public void insertStudent(Student student){
+    public void insertStudent(Student student) {
+        Optional<Student> studentOptional = studentRepository.findById(student.getUsn());
+        if (studentOptional.isPresent()) {
+            return;
+        }
         studentRepository.save(student);
     }
-    public void insertBook(Book book){
-        bookRepository.save(book);
+
+    public boolean insertBook(Book newBook) {
+        Optional<Book> bookOptional = bookRepository.findById(newBook.getIsbn());
+        if (bookOptional.isPresent()) {
+            Book oldBook = bookOptional.get();
+            Integer newQuantity = oldBook.getQuantity() + newBook.getQuantity();
+            oldBook.setQuantity(newQuantity);
+            bookRepository.save(oldBook);
+            return true;
+        }
+        bookRepository.save(newBook);
+        return false;
     }
-    public void insertAuthor(Author author){
+
+    public void insertAuthor(Author author) {
         authorRepository.save(author);
     }
-    public void insertIssue(Issue issue){
+
+    public void insertIssue(Issue issue) {
+        Optional<Book> bookOptional = bookRepository.findById(issue.getIssueBook().getIsbn());
+        Book oldBook = bookOptional.get();
+        Integer newQuantity = oldBook.getQuantity() - 1;
+        oldBook.setQuantity(newQuantity);
+        bookRepository.save(oldBook);
         issueRepository.save(issue);
     }
+
     public Book getBookByTitle(String title) {
         Optional<Book> optionalBook = bookRepository.findBookByTitle(title);
-        if(optionalBook.isPresent()) {
+        if (optionalBook.isPresent()) {
             return optionalBook.get();
         }
         return null;
-
     }
+
     public List<Book> getBookByCategory(String category) {
         List<Book> bookList = bookRepository.findBooksByCategory(category);
         if(bookList.size() > 0) {
@@ -52,20 +74,23 @@ public class Library {
         }
         return null;
     }
+
     public Book getBookByAuthor(String authorName) {
         Optional<Author> optionalAuthor = authorRepository.findAuthorByName(authorName);
-        if(optionalAuthor.isPresent()) {
+        if (optionalAuthor.isPresent()) {
             return optionalAuthor.get().getPublishedBook();
         }
         return null;
     }
-    public List<Author> getAllAuthors(){
+
+    public List<Author> getAllAuthors() {
         List<Author> authorsList = authorRepository.findAll();
-        if(authorsList.size() > 0) {
+        if (authorsList.size() > 0) {
             return authorsList;
         }
         return null;
     }
+
     public Book getBookById(String isbn) {
         Optional<Book> optionalBook = bookRepository.findById(isbn);
         if (optionalBook.isPresent()) {
@@ -73,6 +98,7 @@ public class Library {
         }
         return null;
     }
+
     public List<Issue>findIssueByStudentNumber(String studentUsn){
         Optional<Student> optionalStudent = studentRepository.findById(studentUsn);
         if(optionalStudent.isPresent()){
@@ -81,8 +107,9 @@ public class Library {
                 return issueList;
             }
             return null;
+
         }
         return null;
     }
-    //TODO: 7 - List books by usn
+
 }
