@@ -40,8 +40,7 @@ public class Author {
     }
 
     public void setName(String name) {
-
-        this.name = name.toLowerCase();
+        this.name = name;
     }
 
     public String getEmail() {
