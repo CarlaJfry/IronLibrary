@@ -46,7 +46,7 @@ public class Library {
 
     }
     public List<Book> getBookByCategory(String category) {
-        List<Book> bookList = bookRepository.findBookByCategory(category);
+        List<Book> bookList = bookRepository.findBooksByCategory(category);
         if(bookList.size() > 0) {
             return bookList;
         }
