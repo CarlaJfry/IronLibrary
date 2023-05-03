@@ -72,7 +72,8 @@ public class Menu {
         System.out.println("║ " + "5. List all books along with author" + "                " + "║");
         System.out.println("║ " + "6. Issue book to student" + "                           " + "║");
         System.out.println("║ " + "7. List books by usn" + "                               " + "║");
-        System.out.println("║ " + "8. Exit" + "                     " + "                       ║");
+        System.out.println("║ " + "8. Return a book" + "                                   " + "║");
+        System.out.println("║ " + "9. Exit" + "                     " + "                       ║");
         System.out.println("╚════════════════════════════════════════════════════╝" + COLOR_RESET);
     }
 
@@ -100,6 +101,8 @@ public class Menu {
         } else if (command == 7) {
             listBooksByStudentNumber();
         } else if (command == 8) {
+            returnBook();
+        }else if (command == 9) {
             exit();
         } else {
             System.out.println("Please enter one of the possible available commands: 1, 2, 3...8");
@@ -116,6 +119,7 @@ public class Menu {
         int numberOfBooks;
         System.out.println("");
         System.out.println("Enter ISBN:");
+        System.out.println("(Format example: 978-3-16-148410-1)");
         isbn = validateIsbn();
         System.out.println("");
         System.out.println("Enter title:");
@@ -141,7 +145,7 @@ public class Menu {
             System.out.println("");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("---------------------------------- We have some copies of this book already ---------------------------------------------");
-            System.out.println("------------------------------------ " + numberOfBooks + " will be added to our database! " + COURSE_IMAGE + "---------------------------------------------");
+            System.out.println("------------------------------------- " + numberOfBooks + " will be added to our database! " + COURSE_IMAGE + "-----------------------------------------------");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("");
         } else {
@@ -180,7 +184,6 @@ public class Menu {
             isbn = scanner.nextLine();
             if (!isValidIsbn(isbn)) {
                 System.out.println(COLOR_RED + "Please provide a valid ISBN" + COLOR_RESET);
-                System.out.println("Format example: '978-3-16-148410-1'");
             }
         }
         return isbn;
@@ -243,7 +246,14 @@ public class Menu {
         return number;
     }
 
-
+    private Integer validateIssue() {
+        String input = scanner.nextLine();
+        int issueId = Integer.parseInt(input);
+        while (library.getIssueById(issueId) == null) {
+            System.out.println(COLOR_RED + "Please provide a valid Issue ID" + COLOR_RESET);
+        }
+        return issueId;
+    }
 
     public void listBooksWithAuthor() {
         List<Author> authorsList = library.getAllAuthors();
@@ -371,7 +381,7 @@ public class Menu {
             System.out.println("");
             System.out.println("");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-            System.out.println("---------------------------------Oops! There are no available copies of this book " + SAD_FACE + "--------------------------------------");
+            System.out.println("---------------------------------Oops! There are no available copies of this book " + SAD_FACE + "-------------------------------------");
             System.out.println("------------------------------------Choose another one or try again another day!-----------------------------------------");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("");
@@ -383,7 +393,7 @@ public class Menu {
             library.insertIssue(issue);
             System.out.println("");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-            System.out.println("--------------------------------------- Great job! We have issued your book! " + COURSE_IMAGE + "-------------------------------------------");
+            System.out.println("--------------------------------------- Great job! We have issued your book! " + COURSE_IMAGE + "------------------------------------------");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("");
         }
@@ -411,15 +421,28 @@ public class Menu {
         }
     }
 
-    public void exit() throws InterruptedException {
-        exit = true;
+    public void returnBook() {
+        Integer issueId;
+        System.out.println("Enter issue ID:");
+        issueId = validateIssue();
+        library.deleteIssue(issueId);
+        System.out.println("");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------- Thank you for returning the book! " + COURSE_IMAGE + "------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("");
+      }
+   
+
+        public void exit() throws InterruptedException {
+        exit=true;
         scanner.close();
         Thread.sleep(1000);
         System.out.println("");
         System.out.println("Process finished.");
         System.out.println("");
         Thread.sleep(1000);
-        System.out.println(COLOR_PURPLE + "  _______   ______     ______    _______  .______   ____    ____  _______ \n" +
+        System.out.println(COLOR_PURPLE+"  _______   ______     ______    _______  .______   ____    ____  _______ \n" +
                 " /  _____| /  __  \\   /  __  \\  |       \\ |   _  \\  \\   \\  /   / |   ____|\n" +
                 "|  |  __  |  |  |  | |  |  |  | |  .--.  ||  |_)  |  \\   \\/   /  |  |__   \n" +
                 "|  | |_ | |  |  |  | |  |  |  | |  |  |  ||   _  <    \\_    _/   |   __|  \n" +
@@ -427,4 +450,4 @@ public class Menu {
                 " \\______|  \\______/   \\______/  |_______/ |______/      |__|     |_______|");
     }
 
-}
+    }
