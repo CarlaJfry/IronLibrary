@@ -68,8 +68,8 @@ public class Library {
     }
 
     public List<Book> getBookByCategory(String category) {
-        List<Book> bookList = bookRepository.findBookByCategory(category);
-        if (bookList.size() > 0) {
+        List<Book> bookList = bookRepository.findBooksByCategory(category);
+        if(bookList.size() > 0) {
             return bookList;
         }
         return null;
@@ -99,10 +99,15 @@ public class Library {
         return null;
     }
 
-    public List<Issue> findIssueByStudentNumber(String studentUsn) {
-        List<Issue> issueList = issueRepository.findAllByStudentUsn(studentUsn);
-        if (issueList.size() > 0) {
-            return issueList;
+    public List<Issue>findIssueByStudentNumber(String studentUsn){
+        Optional<Student> optionalStudent = studentRepository.findById(studentUsn);
+        if(optionalStudent.isPresent()){
+            List<Issue> issueList = issueRepository.findAllByStudentUsn(studentUsn);
+            if(issueList.size() > 0) {
+                return issueList;
+            }
+            return null;
+
         }
         return null;
     }
