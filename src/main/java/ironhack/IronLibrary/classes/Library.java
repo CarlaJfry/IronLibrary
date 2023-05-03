@@ -59,6 +59,14 @@ public class Library {
         issueRepository.save(issue);
     }
 
+    public Issue getIssueById(Integer issueId) {
+        Optional<Issue> optionalIssue = issueRepository.findById(issueId);
+        if(optionalIssue.isPresent()) {
+            return optionalIssue.get();
+        }
+        return null;
+    }
+
     public Book getBookByTitle(String title) {
         Optional<Book> optionalBook = bookRepository.findBookByTitle(title);
         if (optionalBook.isPresent()) {
@@ -110,6 +118,17 @@ public class Library {
 
         }
         return null;
+    }
+
+    public void deleteIssue(Integer issueId) {
+        Optional<Issue> issueOptional = issueRepository.findById(issueId);
+        Issue oldIssue = issueOptional.get();
+        Optional<Book> bookOptional = bookRepository.findById(oldIssue.getIssueBook().getIsbn());
+        Book oldBook = bookOptional.get();
+        Integer newQuantity = oldBook.getQuantity() + 1;
+        oldBook.setQuantity(newQuantity);
+        bookRepository.save(oldBook);
+        issueRepository.delete(oldIssue);
     }
 
 }
