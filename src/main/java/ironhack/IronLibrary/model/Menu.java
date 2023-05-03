@@ -246,23 +246,23 @@ public class Menu {
             System.out.println("");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
-            System.out.println("-------------------------------Oops! There are no books in this library yet " + SAD_FACE + "--------------------------------------------");
+            System.out.println("-------------------------------Oops! There are no books in this library yet " + SAD_FACE + "-------------------------------------------");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("-------------------------------------------------------------------------------------------------------------------------");
             System.out.println("");
             System.out.println("");
+        }else{
+            System.out.println("");
+            System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
+            System.out.println("");
+            System.out.println("");
+            System.out.printf(COLOR_BLUE + "%-17s   %-20s   %-10s   %-8s   %-20s   %-20s   %n", "Book ISBN", "Book Title", "Category", "Quantity", "Author name", "Author email" + COLOR_RESET);
+            for (Author a : authorsList) {
+                System.out.printf("%-17s   %-20s   %-10s   %-8d   %-20s   %-20s   %n", a.getPublishedBook().getIsbn(), a.getPublishedBook().getTitle(), a.getPublishedBook().getCategory(), a.getPublishedBook().getQuantity(), a.getName(), a.getEmail());
+            }
+            System.out.println("");
+            System.out.println("");
         }
-        System.out.println("");
-        System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
-        System.out.println("");
-        System.out.println("");
-        System.out.printf(COLOR_BLUE + "%-17s   %-20s   %-10s   %-8s   %-20s   %-20s   %n", "Book ISBN", "Book Title", "Category", "Quantity", "Author name", "Author email" + COLOR_RESET);
-        for (Author a : authorsList) {
-            System.out.printf("%-17s   %-20s   %-10s   %-8d   %-20s   %-20s   %n", a.getPublishedBook().getIsbn(), a.getPublishedBook().getTitle(), a.getPublishedBook().getCategory(), a.getPublishedBook().getQuantity(), a.getName(), a.getEmail());
-        }
-        System.out.println("");
-        System.out.println("");
-
     }
 
     public void searchBookByCategory() {
