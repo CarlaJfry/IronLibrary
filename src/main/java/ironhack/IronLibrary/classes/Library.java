@@ -67,10 +67,10 @@ public class Library {
         return null;
     }
 
-    public Book getBookByTitle(String title) {
-        Optional<Book> optionalBook = bookRepository.findBookByTitle(title);
-        if (optionalBook.isPresent()) {
-            return optionalBook.get();
+    public List<Book> getBookByTitle(String title) {
+        List<Book> bookList = bookRepository.findBookByTitle(title);
+        if(bookList.size() > 0) {
+            return bookList;
         }
         return null;
     }
@@ -120,6 +120,7 @@ public class Library {
         return null;
     }
 
+
     public void deleteIssue(Integer issueId) {
         Optional<Issue> issueOptional = issueRepository.findById(issueId);
         Issue oldIssue = issueOptional.get();
@@ -130,5 +131,13 @@ public class Library {
         bookRepository.save(oldBook);
         issueRepository.delete(oldIssue);
     }
+
+public Boolean isAuthorExistent(String authorName){
+        Optional<Author> optionalAuthor = authorRepository.findAuthorByName(authorName);
+        if(optionalAuthor.isPresent()){
+            return true;
+        }
+        return false;
+}
 
 }

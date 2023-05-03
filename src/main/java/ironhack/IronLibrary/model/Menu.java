@@ -130,6 +130,10 @@ public class Menu {
         System.out.println("");
         System.out.println("Enter Author name:");
         authorName = validateName();
+        while(library.isAuthorExistent(authorName)){
+            System.out.println("The Author name already exists. Please enter a different name: ");
+            authorName = validateName();
+        }
         System.out.println("");
         System.out.println("Enter Author email:");
         email = validateEmail();
@@ -299,7 +303,7 @@ public class Menu {
         if (str == "title") {
             System.out.println("Enter title :");
             param = validateString();
-            spawnedBook = library.getBookByTitle(param);
+            bookList = library.getBookByTitle(param);
 
         } else if (str == "author") {
             System.out.println("Enter Author Name :");
@@ -313,13 +317,15 @@ public class Menu {
         }
 
 //        SI ENCUENTRA EL BOOK
-        if (spawnedBook != null) {
+        if (bookList != null) {
             System.out.println("");
             System.out.println("We found your book! " + COURSE_IMAGE);
             System.out.println("");
             System.out.println("");
             System.out.printf(COLOR_BLUE + "%-17s  %-20s   %-10s   %-8s   %n", "Book ISBN", "Book Title", "Category", "Quantity" + COLOR_RESET);
-            System.out.printf("%-17s  %-20s   %-10s   %-8s   %n", spawnedBook.getIsbn(), spawnedBook.getTitle(), spawnedBook.getCategory(), spawnedBook.getQuantity());
+           for(Book b : bookList) {
+               System.out.printf("%-17s  %-20s   %-10s   %-8s   %n", b.getIsbn(), b.getTitle(), b.getCategory(), b.getQuantity());
+           }
             System.out.println("");
             System.out.println("");
 //        SI NO ENCUENTRA EL BOOK
@@ -425,23 +431,23 @@ public class Menu {
         System.out.println("-------------------------------------- Thank you for returning the book! " + COURSE_IMAGE + "------------------------------------------");
         System.out.println("-------------------------------------------------------------------------------------------------------------------------");
         System.out.println("");
+      }
+   
+
+        public void exit() throws InterruptedException {
+        exit=true;
+        scanner.close();
+        Thread.sleep(1000);
+        System.out.println("");
+        System.out.println("Process finished.");
+        System.out.println("");
+        Thread.sleep(1000);
+        System.out.println(COLOR_PURPLE+"  _______   ______     ______    _______  .______   ____    ____  _______ \n" +
+                " /  _____| /  __  \\   /  __  \\  |       \\ |   _  \\  \\   \\  /   / |   ____|\n" +
+                "|  |  __  |  |  |  | |  |  |  | |  .--.  ||  |_)  |  \\   \\/   /  |  |__   \n" +
+                "|  | |_ | |  |  |  | |  |  |  | |  |  |  ||   _  <    \\_    _/   |   __|  \n" +
+                "|  |__| | |  `--'  | |  `--'  | |  '--'  ||  |_)  |     |  |     |  |____ \n" +
+                " \\______|  \\______/   \\______/  |_______/ |______/      |__|     |_______|");
     }
-
-
-        public void exit () throws InterruptedException {
-            exit = true;
-            scanner.close();
-            Thread.sleep(1000);
-            System.out.println("");
-            System.out.println("Process finished.");
-            System.out.println("");
-            Thread.sleep(1000);
-            System.out.println(COLOR_PURPLE + "  _______   ______     ______    _______  .______   ____    ____  _______ \n" +
-                    " /  _____| /  __  \\   /  __  \\  |       \\ |   _  \\  \\   \\  /   / |   ____|\n" +
-                    "|  |  __  |  |  |  | |  |  |  | |  .--.  ||  |_)  |  \\   \\/   /  |  |__   \n" +
-                    "|  | |_ | |  |  |  | |  |  |  | |  |  |  ||   _  <    \\_    _/   |   __|  \n" +
-                    "|  |__| | |  `--'  | |  `--'  | |  '--'  ||  |_)  |     |  |     |  |____ \n" +
-                    " \\______|  \\______/   \\______/  |_______/ |______/      |__|     |_______|");
-        }
 
     }
