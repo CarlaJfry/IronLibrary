@@ -327,22 +327,36 @@ public class Menu {
         System.out.println("Enter usn: ");
         usn = validateString();
         List<Issue> issueList = library.findIssueByStudentNumber(usn);
-        System.out.println("");
-        System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
-        for (Issue issue : issueList){
+        if(issueList!=null){
+            System.out.println("");
+            System.out.println(COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE + " Here is your list of books : " + COURSE_IMAGE + COURSE_IMAGE + COURSE_IMAGE);
+            for (Issue issue : issueList){
+                System.out.println("");
+                System.out.println("");
+                System.out.printf(COLOR_BLUE + "%-20s   %-15s   %-10s   %n", "Book Title", "Student Name", "Return Date" + COLOR_RESET);
+                System.out.printf("%-20s   %-15s   %-10s   %n", issue.getIssueBook().getTitle(), issue.getIssueStudent().getName(), issue.getReturnDate());
+            }
             System.out.println("");
             System.out.println("");
-            System.out.printf(COLOR_BLUE + "%-20s   %-15s   %-10s   %n", "Book Title", "Student Name", "Return Date" + COLOR_RESET);
-            System.out.printf("%-20s   %-15s   %-10s   %n", issue.getIssueBook().getTitle(), issue.getIssueStudent().getName(), issue.getReturnDate());
+        }else{
+            System.out.println(COLOR_RED+"Error! There is no student matching that usn. Try again..."+COLOR_RESET);
+            listBooksByStudentNumber();
         }
-        System.out.println("");
-        System.out.println("");
-
     }
-    public void exit() {
+    public void exit() throws InterruptedException {
         exit=true;
         scanner.close();
-        System.out.println("Goodbye!");
+        Thread.sleep(1000);
+        System.out.println("");
+        System.out.println("Process finished.");
+        System.out.println("");
+        Thread.sleep(1000);
+        System.out.println(COLOR_PURPLE+"  _______   ______     ______    _______  .______   ____    ____  _______ \n" +
+                " /  _____| /  __  \\   /  __  \\  |       \\ |   _  \\  \\   \\  /   / |   ____|\n" +
+                "|  |  __  |  |  |  | |  |  |  | |  .--.  ||  |_)  |  \\   \\/   /  |  |__   \n" +
+                "|  | |_ | |  |  |  | |  |  |  | |  |  |  ||   _  <    \\_    _/   |   __|  \n" +
+                "|  |__| | |  `--'  | |  `--'  | |  '--'  ||  |_)  |     |  |     |  |____ \n" +
+                " \\______|  \\______/   \\______/  |_______/ |______/      |__|     |_______|");
     }
 
 }
